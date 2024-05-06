@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,11 +37,14 @@ Route::group(['middleware' => 'Admin'], function () {
     Route::post('/admin/addPasienBalita', [AdminController::class, 'addPasienBalita'])->name('admin.addPasienBalita');
     Route::post('/admin/updatePasienBalita', [AdminController::class, 'updatePasienBalita'])->name('admin.updatePasienBalita');
     Route::get('/admin/deletePasienBalita/{id}', [AdminController::class, 'deletePasienBalita'])->name('admin.deletePasienBalita');
-
+    
     Route::get('/admin/laporan', [AdminController::class, 'laporan'])->name('admin.laporan');
 });
 
 Route::group(['middleware' => 'user'], function () {
+    Route::get('/user', [UserController::class, 'index'])->name('user.dashboard');
+    Route::get('/user/addLaporan', [UserController::class, 'addLaporan'])->name('user.addLaporan');
+    Route::post('/user/addLaporanPost', [UserController::class, 'addLaporanPost'])->name('user.addLaporanPost');
     // Rute-rute yang memerlukan autentikasi pengguna biasa
 });
 

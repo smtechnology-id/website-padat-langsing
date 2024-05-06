@@ -40,4 +40,14 @@ class AuthController extends Controller
         // Jika autentikasi gagal, arahkan kembali ke halaman login dengan pesan kesalahan
         return redirect()->route('login')->with('error', 'Email or password is incorrect.');
     }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        // Redirect ke halaman login setelah logout
+        return redirect()->route('login');
+    }
+    public function jenis_pasien() {
+        return view('user.jenis_pasien');
+    }
 }

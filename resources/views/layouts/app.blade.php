@@ -71,7 +71,7 @@
 
                     <!-- Topbar Search Form -->
                     <div class="app-search d-none d-lg-block">
-                        
+
                     </div>
                 </div>
 
@@ -136,21 +136,42 @@
 
                     <li class="side-nav-title">Main</li>
 
-                    <li class="side-nav-item">
-                        <a href="{{ route('admin.dashboard') }}" class="side-nav-link">
-                            <i class="ri-home-3-line"></i>
-                            <span> Dashboard </span>
-                        </a>
-                        <a href="{{ route('admin.pasien') }}" class="side-nav-link">
-                            <i class="ri-home-3-line"></i>
-                            <span> Data Pasien </span>
-                        </a>
-                        <a href="{{ route('admin.laporan') }}" class="side-nav-link">
-                            <i class="ri-home-3-line"></i>
-                            <span> Data Laporan </span>
-                        </a>
-                    </li>
-                    <li class="side-nav-title">Components</li>
+
+                    @if (Auth::user()->level == 'admin')
+                        <li class="side-nav-item">
+                            <a href="{{ route('admin.dashboard') }}" class="side-nav-link">
+                                <i class="ri-home-3-line"></i>
+                                <span> Dashboard </span>
+                            </a>
+                        </li>
+                        <li class="side-nav-item">
+                            <a href="{{ route('admin.pasien') }}" class="side-nav-link">
+                                <i class="ri-home-3-line"></i>
+                                <span> Data Pasien </span>
+                            </a>
+                        </li>
+                        <li class="side-nav-item">
+                            <a href="{{ route('admin.laporan') }}" class="side-nav-link">
+                                <i class="ri-home-3-line"></i>
+                                <span> Data Laporan </span>
+                            </a>
+                        </li>
+                    @else
+                        <li class="side-nav-item">
+                            <a href="{{ route('user.dashboard') }}" class="side-nav-link">
+                                <i class="ri-home-3-line"></i>
+                                <span> Dashboard </span>
+                            </a>
+                        </li>
+                        <li class="side-nav-item">
+                            <a href="{{ route('user.addLaporan') }}" class="side-nav-link">
+                                <i class="ri-home-3-line"></i>
+                                <span> Tambah Laporan </span>
+                            </a>
+                        </li>
+                    @endif
+
+
 
 
                 </ul>
@@ -239,7 +260,7 @@
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/js/jquery.dataTables.min.js"></script>
-    
+
     <script>
         $('table').dataTable();
     </script>
