@@ -21,7 +21,15 @@ Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('/loginPost', [AuthController::class, 'loginPost'])->name('loginPost');
 
 Route::get('/register', [AuthController::class, 'register'])->name('register');
-Route::post('/registerPost', [AuthController::class, 'registerPost'])->name('registerPost');
+
+Route::get('/registerBalita', [AuthController::class, 'registerBalita'])->name('registerBalita');
+Route::post('/registerBalitaPost', [AuthController::class, 'registerBalitaPost'])->name('registerBalitaPost');
+
+Route::get('/registerMother', [AuthController::class, 'registerMother'])->name('registerMother');
+Route::post('/registerMotherPost', [AuthController::class, 'registerMotherPost'])->name('registerMotherPost');
+
+Route::get('/registerKader', [AuthController::class, 'registerKader'])->name('registerKader');
+Route::post('/registerKaderPost', [AuthController::class, 'registerKaderPost'])->name('registerKaderPost');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -32,14 +40,14 @@ Route::group(['middleware' => 'Admin'], function () {
     Route::post('/admin/addPasien', [AdminController::class, 'addPasien'])->name('admin.addPasien');
     Route::post('/admin/updatePasien', [AdminController::class, 'updatePasien'])->name('admin.updatePasien');
     Route::get('/admin/deletePasien/{id}', [AdminController::class, 'deletePasien'])->name('admin.deletePasien');
-    
+
     Route::post('/admin/addPasienBalita', [AdminController::class, 'addPasienBalita'])->name('admin.addPasienBalita');
     Route::post('/admin/updatePasienBalita', [AdminController::class, 'updatePasienBalita'])->name('admin.updatePasienBalita');
     Route::get('/admin/deletePasienBalita/{id}', [AdminController::class, 'deletePasienBalita'])->name('admin.deletePasienBalita');
-    
+
     Route::get('/admin/laporan', [AdminController::class, 'laporan'])->name('admin.laporan');
-    
-    
+
+
     Route::get('/admin/kader-kesehatan', [AdminController::class, 'kader'])->name('admin.kader');
     Route::post('/admin/addKaderKesehatan', [AdminController::class, 'addKaderKesehatan'])->name('admin.addKaderKesehatan');
     Route::post('/admin/updateKaderKesehatan', [AdminController::class, 'updateKaderKesehatan'])->name('admin.updateKaderKesehatan');
@@ -58,5 +66,3 @@ Route::group(['middleware' => 'kader'], function () {
     Route::get('/laporan', [KaderController::class, 'laporan'])->name('kader.laporan');
     Route::post('/addLaporanKader', [KaderController::class, 'addLaporanKader'])->name('kader.addLaporanKader');
 });
-
-
