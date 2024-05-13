@@ -110,7 +110,7 @@
         <div class="leftside-menu">
 
             <!-- Brand Logo Light -->
-            <a href="index.html" class="logo logo-light">
+            <a href="" class="logo logo-light">
                 <span class="logo-lg">
                     <img src="{{ asset('assets/images/logo.png') }}" alt="logo">
                 </span>
@@ -120,7 +120,7 @@
             </a>
 
             <!-- Brand Logo Dark -->
-            <a href="index.html" class="logo logo-dark">
+            <a href="" class="logo logo-dark">
                 <span class="logo-lg">
                     <img src="{{ asset('assets/images/logo-dark.png') }}" alt="dark logo">
                 </span>
@@ -150,13 +150,26 @@
                                 <span> Data Pasien </span>
                             </a>
                         </li>
+                        
+                        <li class="side-nav-item">
+                            <a href="{{ route('admin.kader') }}" class="side-nav-link">
+                                <i class="ri-home-3-line"></i>
+                                <span> Kader Kesehatan </span>
+                            </a>
+                        </li>
                         <li class="side-nav-item">
                             <a href="{{ route('admin.laporan') }}" class="side-nav-link">
                                 <i class="ri-home-3-line"></i>
-                                <span> Data Laporan </span>
+                                <span> Data Laporan Pasien</span>
                             </a>
                         </li>
-                    @else
+                        <li class="side-nav-item">
+                            <a href="{{ route('admin.kaderReport') }}" class="side-nav-link">
+                                <i class="ri-home-3-line"></i>
+                                <span> Data Laporan Kader</span>
+                            </a>
+                        </li>
+                    @elseif (Auth::user()->level == 'user')
                         <li class="side-nav-item">
                             <a href="{{ route('user.dashboard') }}" class="side-nav-link">
                                 <i class="ri-home-3-line"></i>
@@ -169,7 +182,26 @@
                                 <span> Tambah Laporan </span>
                             </a>
                         </li>
-                    @endif
+                        <li class="side-nav-item">
+                            <a href="{{ route('user.laporan') }}" class="side-nav-link">
+                                <i class="ri-home-3-line"></i>
+                                <span> Riwayat Laporan </span>
+                            </a>
+                        </li>
+                        @else
+                        <li class="side-nav-item">
+                            <a href="{{ route('kader.dashboard') }}" class="side-nav-link">
+                                <i class="ri-home-3-line"></i>
+                                <span> Dashboard </span>
+                            </a>
+                        </li>
+                        <li class="side-nav-item">
+                            <a href="{{ route('kader.laporan') }}" class="side-nav-link">
+                                <i class="ri-home-3-line"></i>
+                                <span> Laporan </span>
+                            </a>
+                        </li>
+                        @endif
 
 
 

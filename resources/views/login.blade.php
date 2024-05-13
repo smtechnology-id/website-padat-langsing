@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Log In | Velonic - Bootstrap 5 Admin & Dashboard Template</title>
+    <title>Login || Sistem Padat Langsing</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully responsive admin theme which can be used to build CRM, CMS,ERP etc." name="description" />
-    <meta content="Techzaa" name="author" />
+    <meta content="Website Padat Langsing - Peduli Masalah Stunting" name="description" />
+    <meta content="Smtehcbology.id" name="author" />
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
@@ -29,8 +29,8 @@
                     <div class="card overflow-hidden">
                         <div class="row g-0">
                             <div class="col-lg-6 d-none d-lg-block p-2">
-                                <img src="{{ asset('bg.jpg') }}" alt=""
-                                    class="img-fluid rounded h-100">
+                                <img src="{{ asset('assets/images/cover.jpg') }}" alt=""
+                                    class="img-fluid rounded h-100" style="object-fit: cover">
                             </div>
                             <div class="col-lg-6">
                                 <div class="d-flex flex-column h-100">
@@ -68,7 +68,6 @@
                                                 <button class="btn btn-primary w-100 mb-2" type="submit"><i
                                                         class="ri-login-circle-fill me-1"></i> <span class="fw-bold">Log
                                                         In</span> </button>
-                                                        <a href="{{ route('register') }}" class="btn btn-soft-primary w-100">Register</a>
 
                                             </div>
                                         </form>

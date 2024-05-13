@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\KaderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +28,6 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::group(['middleware' => 'Admin'], function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 
-
-
     Route::get('/admin/pasien', [AdminController::class, 'pasien'])->name('admin.pasien');
     Route::post('/admin/addPasien', [AdminController::class, 'addPasien'])->name('admin.addPasien');
     Route::post('/admin/updatePasien', [AdminController::class, 'updatePasien'])->name('admin.updatePasien');
@@ -39,13 +38,25 @@ Route::group(['middleware' => 'Admin'], function () {
     Route::get('/admin/deletePasienBalita/{id}', [AdminController::class, 'deletePasienBalita'])->name('admin.deletePasienBalita');
     
     Route::get('/admin/laporan', [AdminController::class, 'laporan'])->name('admin.laporan');
+    
+    
+    Route::get('/admin/kader-kesehatan', [AdminController::class, 'kader'])->name('admin.kader');
+    Route::post('/admin/addKaderKesehatan', [AdminController::class, 'addKaderKesehatan'])->name('admin.addKaderKesehatan');
+    Route::post('/admin/updateKaderKesehatan', [AdminController::class, 'updateKaderKesehatan'])->name('admin.updateKaderKesehatan');
+    Route::get('/admin/kaderReport', [AdminController::class, 'kaderReport'])->name('admin.kaderReport');
+    Route::get('/admin/deleteKader/{id}', [AdminController::class, 'deleteKader'])->name('admin.deleteKader');
 });
 
 Route::group(['middleware' => 'user'], function () {
     Route::get('/user', [UserController::class, 'index'])->name('user.dashboard');
     Route::get('/user/addLaporan', [UserController::class, 'addLaporan'])->name('user.addLaporan');
     Route::post('/user/addLaporanPost', [UserController::class, 'addLaporanPost'])->name('user.addLaporanPost');
-    // Rute-rute yang memerlukan autentikasi pengguna biasa
+    Route::get('/user/laporan', [UserController::class, 'laporan'])->name('user.laporan');
+});
+Route::group(['middleware' => 'kader'], function () {
+    Route::get('/kader', [KaderController::class, 'index'])->name('kader.dashboard');
+    Route::get('/laporan', [KaderController::class, 'laporan'])->name('kader.laporan');
+    Route::post('/addLaporanKader', [KaderController::class, 'addLaporanKader'])->name('kader.addLaporanKader');
 });
 
 

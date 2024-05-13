@@ -15,6 +15,7 @@ class Report extends Model
         'alasan',
         'jumlah_tidak_dimakan',
         'foto_jumlah_tidak_dimakan',
+        'pertanyaan_tambahan',
         'jenis_pasien',
     ];
 

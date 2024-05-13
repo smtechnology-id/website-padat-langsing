@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('alasan');
             $table->string('jumlah_tidak_dimakan');
             $table->string('foto_jumlah_tidak_dimakan');
+            $table->string('pertanyaan_tambahan');
             $table->string('jenis_pasien');
             $table->timestamps();
             

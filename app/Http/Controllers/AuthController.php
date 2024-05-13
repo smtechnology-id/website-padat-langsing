@@ -25,13 +25,14 @@ class AuthController extends Controller
 
         // Ambil kredensial dari permintaan
         $credentials = $request->only('email', 'password');
-
         // Coba autentikasi pengguna
         if (Auth::attempt($credentials)) {
             // Jika autentikasi berhasil, arahkan ke halaman sesuai level pengguna
             $user = Auth::user();
             if ($user->level == 'admin') {
                 return redirect()->route('admin.dashboard');
+            } elseif($user->level == 'kader') {
+                return redirect()->route('kader.dashboard');
             } else {
                 return redirect()->route('user.dashboard');
             }

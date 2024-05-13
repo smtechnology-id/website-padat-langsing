@@ -6,6 +6,8 @@ use App\Models\Balita;
 use App\Models\User;
 use App\Models\Mother;
 use App\Models\Children;
+use App\Models\KaderReport;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,13 +16,18 @@ class AdminController extends Controller
     public function index()
     {
         if (auth()->user()->level == 'admin') {
-            return view('admin.dashboard');
+            $laporanCountToday = Report::whereDate('created_at', today())->count();
+            $mother = Mother::all()->count();
+            $baita = Balita::all()->count();
+            $kader = User::where('jenis_pasien', 'kader')->count();
+            return view('admin.dashboard', compact('laporanCountToday', 'mother', 'baita', 'kader'));
         } else {
             abort(403, 'Unauthorized action.'); // Arahkan ke halaman 403 jika pengguna bukan admin
         }
     }
 
-    public function pasien() {
+    public function pasien()
+    {
         $balita = Balita::all();
         $mother = Mother::all();
         return view('admin.pasien', compact('mother', 'balita'));
@@ -48,8 +55,8 @@ class AdminController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        
-        
+
+
         $user_id = $user->id;
         // Simpan data ibu ke dalam tabel mothers
         $mother = Mother::create([
@@ -64,7 +71,7 @@ class AdminController extends Controller
         ]);
 
         // Simpan data pengguna ke dalam tabel users
-        
+
 
         // Relasikan user dengan mother
         $mother->user()->associate($user);
@@ -222,15 +229,97 @@ class AdminController extends Controller
     {
         // Temukan data balita berdasarkan ID
         $balita = Balita::findOrFail($id);
-        
+
         // Hapus pengguna terkait
         $user = User::findOrFail($balita->user_id);
         $balita->delete();
         $user->delete();
-        
+
         // Hapus data balita
 
         // Redirect ke halaman yang sesuai atau berikan respons sesuai kebutuhan
         return redirect()->back()->with('success', 'Data balita dan pengguna terkait berhasil dihapus.');
+    }
+
+    public function laporan()
+    {
+        $laporan = Report::orderBy('created_at', 'desc')->get();
+        return view('admin.laporan', compact('laporan'));
+    }
+
+    public function kader()
+    {
+        $kader = User::where('jenis_pasien', 'kader')->get();
+        return view('admin.kader', compact('kader'));
+    }
+    public function addKaderKesehatan(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8',
+        ]);
+
+        // Buat user kader kesehatan
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'jenis_pasien' => 'kader',
+            'level' => 'kader',
+        ]);
+
+        return redirect()->back()->with('success', 'Kader kesehatan berhasil ditambahkan.');
+    }
+    public function kaderReport()
+    {
+        $laporan = KaderReport::latest()->get();
+        return view('admin.kaderReport', compact('laporan'));
+    }
+
+    public function deleteKader($id)
+    {
+        // Temukan data kader berdasarkan ID
+        $kader = User::findOrFail($id);
+
+        // Hapus data kader
+        $kader->delete();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back()->with('success', 'Data kader berhasil dihapus.');
+    }
+
+    public function updateKaderKesehatan(Request $request)
+    {
+        // Temukan data kader berdasarkan ID
+        $kader = User::findOrFail($request->id);
+
+        // Validasi input
+        $rules = [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $kader->id, // Perhatikan penggunaan unique:users,email
+        ];
+
+        // Periksa apakah bidang password tidak kosong
+        if (!empty($request->password)) {
+            $rules['password'] = 'required|string|min:8';
+        }
+
+        $request->validate($rules);
+
+        // Perbarui data kader
+        $kader->name = $request->name;
+        $kader->email = $request->email;
+
+        // Periksa apakah bidang password tidak kosong
+        if (!empty($request->password)) {
+            $kader->password = Hash::make($request->password); // Jangan lupa untuk menghash password
+        }
+
+        $kader->save();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back()->with('success', 'Data kader berhasil diperbarui.');
     }
 }
